@@ -1,6 +1,6 @@
 rootProject.name = "dev-helper"
 pluginManagement {
-    includeBuild("../vs-core/buildScript")
+    includeBuild("../vs-core/build-script")
     plugins {
         id("ru.vs.empty_plugin") version "0.1.0"
     }
