@@ -1,7 +1,9 @@
 rootProject.name = "dev-helper"
 pluginManagement {
     includeBuild("../vs-core/buildScript")
-
+    plugins {
+        id("ru.vs.empty_plugin") version "0.1.0"
+    }
     repositories {
         mavenLocal()
         gradlePluginPortal()
