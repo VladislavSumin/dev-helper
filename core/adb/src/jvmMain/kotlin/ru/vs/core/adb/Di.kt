@@ -4,6 +4,8 @@ import com.malinskiy.adam.AndroidDebugBridgeClientFactory
 import com.malinskiy.adam.interactor.StartAdbInteractor
 import com.malinskiy.adam.interactor.StopAdbInteractor
 import com.malinskiy.adam.transport.vertx.VertxSocketFactory
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.GlobalScope
 import org.kodein.di.DI
 import org.kodein.di.bindSingleton
 import ru.vs.core.adb.domain.AdbClientInteractor
@@ -16,6 +18,8 @@ import ru.vs.core.di.Modules
 import ru.vs.core.di.i
 
 fun Modules.coreAdb() = DI.Module("core-adb") {
+    bindSingleton<CoroutineScope>(Di.Scope.Application) { GlobalScope }
+
     bindSingleton { VertxSocketFactory() }
     bindSingleton { StartAdbInteractor() }
     bindSingleton { StopAdbInteractor() }
@@ -23,5 +27,11 @@ fun Modules.coreAdb() = DI.Module("core-adb") {
 
     bindSingleton<AdbClientInteractor> { AdbClientInteractorImpl(i()) }
     bindSingleton<AdbServerInteractor> { AdbServerInteractorImpl(i(), i()) }
-    bindSingleton<AdbDevicesInteractor> { AdbDevicesInteractorImpl(i()) }
+    bindSingleton<AdbDevicesInteractor> { AdbDevicesInteractorImpl(i(), i(Di.Scope.Application)) }
+}
+
+object Di {
+    enum class Scope {
+        Application
+    }
 }

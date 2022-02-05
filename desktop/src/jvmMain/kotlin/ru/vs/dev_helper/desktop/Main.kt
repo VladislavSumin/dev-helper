@@ -1,6 +1,7 @@
 package ru.vs.dev_helper.desktop
 
 import co.touchlab.kermit.Logger
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.yield
 import org.kodein.di.direct
@@ -28,6 +29,9 @@ fun main() {
     runBlocking {
         adbServerInteractor.startServer()
         println(adbDevicesInteractor.getDeviceList())
+        adbDevicesInteractor.observeDevices().collect {
+            println(it)
+        }
         adbClientInteractor.closeAll()
     }
 

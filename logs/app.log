@@ -1,0 +1,5 @@
+19:41:40.492 [main] INFO  Kermit - [main] Starting dev-helper
+19:41:40.499 [main] INFO  Kermit - [main] DI graph created
+19:41:40.633 [main] INFO  Kermit - [Kermit] Adb server started
+19:41:40.721 [main] DEBUG io.vertx.core.logging.LoggerFactory - Using io.vertx.core.logging.SLF4JLogDelegateFactory
+19:41:40.983 [vert.x-eventloop-thread-0] WARN  io.netty.resolver.dns.DnsServerAddressStreamProviders - Can not find io.netty.resolver.dns.macos.MacOSDnsServerAddressStreamProvider in the classpath, fallback to system defaults. This may result in incorrect DNS resolutions on MacOS.
