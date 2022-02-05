@@ -1,0 +1,11 @@
+[versions]
+vs = "0.1.0"
+adam = "0.4.3"
+
+[libraries]
+vs-coroutines = { module = "ru.vs:coroutines", version.ref = "vs" }
+vs-di = { module = "ru.vs:di", version.ref = "vs" }
+vs-logging-core = { module = "ru.vs:logging", version.ref = "vs" }
+vs-logging-slf4j = { module = "ru.vs:logging-slf4j", version.ref = "vs" }
+
+adam = { module = "com.malinskiy.adam:adam", version.ref = "adam" }

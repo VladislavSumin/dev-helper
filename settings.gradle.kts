@@ -12,6 +12,7 @@ pluginManagement {
     }
 }
 
+enableFeaturePreview("VERSION_CATALOGS")
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
@@ -20,8 +21,15 @@ dependencyResolutionManagement {
         google()
         gradlePluginPortal()
     }
+
+    versionCatalogs {
+        create("libs") {
+            from(files("libs.versions.toml"))
+        }
+    }
 }
 
 includeBuild("../vs-core")
 
+include(":core:adb")
 include(":desktop")

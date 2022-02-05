@@ -8,9 +8,9 @@ kotlin {
             dependencies {
                 implementation(libs.vs.coroutines)
                 implementation(libs.vs.di)
-                implementation(libs.vs.logging.slf4j)
+                implementation(libs.vs.logging.core)
 
-                implementation(project(":core:adb"))
+                implementation(libs.adam)
             }
         }
     }
