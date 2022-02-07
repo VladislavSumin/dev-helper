@@ -1,6 +1,7 @@
 package ru.vs.dev_helper.desktop.ui.root
 
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -21,7 +22,7 @@ fun RootScreenView(componentContext: ComponentContext) {
 
     LocalComponentContextHolder(componentContext) {
         MainTheme(darkTheme = true) {
-            Surface(Modifier.fillMaxSize()) {
+            Surface(Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
                 LocalRootNavigationHolder(router) {
                     NavigationContentView()
                 }

@@ -10,6 +10,8 @@ import org.kodein.di.DI
 import org.kodein.di.bindSingleton
 import ru.vs.core.adb.domain.AdbClientInteractor
 import ru.vs.core.adb.domain.AdbClientInteractorImpl
+import ru.vs.core.adb.domain.AdbDeviceInteractor
+import ru.vs.core.adb.domain.AdbDeviceInteractorImpl
 import ru.vs.core.adb.domain.AdbDevicesInteractor
 import ru.vs.core.adb.domain.AdbDevicesInteractorImpl
 import ru.vs.core.adb.domain.AdbServerInteractor
@@ -26,8 +28,9 @@ fun Modules.coreAdb() = DI.Module("core-adb") {
     bindSingleton { AndroidDebugBridgeClientFactory().apply { socketFactory = i() }.build() }
 
     bindSingleton<AdbClientInteractor> { AdbClientInteractorImpl(i()) }
-    bindSingleton<AdbServerInteractor> { AdbServerInteractorImpl(i(), i()) }
+    bindSingleton<AdbDeviceInteractor> { AdbDeviceInteractorImpl(i(), i(Di.Scope.Application)) }
     bindSingleton<AdbDevicesInteractor> { AdbDevicesInteractorImpl(i(), i(Di.Scope.Application)) }
+    bindSingleton<AdbServerInteractor> { AdbServerInteractorImpl(i(), i()) }
 }
 
 object Di {
