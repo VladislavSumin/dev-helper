@@ -3,6 +3,7 @@ package ru.vs.dev_helper.desktop.ui.main
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.launch
 import ru.vs.core.adb.domain.AdbDevicesInteractor
@@ -19,7 +20,9 @@ class MainScreenViewModel(
         lastSelectedAdbDeviceSerial
     ) { devices, serial ->
         devices.find { it.serial == serial }
-    }.shareIn(viewModelScope, started = SharingStarted.Lazily)
+    }
+        .distinctUntilChanged()
+        .shareIn(viewModelScope, replay = 1, started = SharingStarted.Lazily)
 
     fun setSelectedAdbDevice(deviceId: String) {
         viewModelScope.launch {

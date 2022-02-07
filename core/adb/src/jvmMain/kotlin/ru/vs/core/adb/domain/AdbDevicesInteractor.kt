@@ -10,6 +10,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.consumeAsFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
@@ -31,6 +32,7 @@ internal class AdbDevicesInteractorImpl(
         flow { emit(adb.execute(AsyncDeviceMonitorRequest(), applicationScope)) }
             .flatMapLatest { it.consumeAsFlow() }
             .map { it.toAdbDevices() }
+            .distinctUntilChanged()
             .shareIn(
                 applicationScope,
                 replay = 1,
