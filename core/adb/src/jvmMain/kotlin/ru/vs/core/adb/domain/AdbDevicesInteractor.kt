@@ -8,9 +8,13 @@ import com.malinskiy.adam.request.device.ListDevicesRequest
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.consumeAsFlow
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.shareIn
 import ru.vs.core.adb.data.AdbDevice
 import ru.vs.core.adb.data.AdbDeviceState
 
@@ -23,16 +27,21 @@ internal class AdbDevicesInteractorImpl(
     private val adb: AndroidDebugBridgeClient,
     private val applicationScope: CoroutineScope
 ) : AdbDevicesInteractor {
+    private val devicesObservable =
+        flow { emit(adb.execute(AsyncDeviceMonitorRequest(), applicationScope)) }
+            .flatMapLatest { it.consumeAsFlow() }
+            .map { it.toAdbDevices() }
+            .shareIn(
+                applicationScope,
+                replay = 1,
+                started = SharingStarted.WhileSubscribed(3000, 0)
+            )
+
     override suspend fun getDeviceList(): List<AdbDevice> {
         return adb.execute(ListDevicesRequest()).toAdbDevices()
     }
 
-    override fun observeDevices(): Flow<List<AdbDevice>> {
-        //TODO make shared
-        return adb.execute(AsyncDeviceMonitorRequest(), applicationScope)
-            .consumeAsFlow()
-            .map { it.toAdbDevices() }
-    }
+    override fun observeDevices(): Flow<List<AdbDevice>> = devicesObservable
 }
 
 private fun List<Device>.toAdbDevices() = map(Device::toAdbDevice)

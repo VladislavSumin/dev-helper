@@ -7,9 +7,11 @@ import ru.vs.core.di.Modules
 import ru.vs.core.di.i
 import ru.vs.dev_helper.desktop.ui.main.MainScreenView
 import ru.vs.dev_helper.desktop.ui.main.MainScreenViewModel
+import ru.vs.dev_helper.desktop.ui.top_bar.TopBarScreenViewModel
 
 fun createDi() = DI.lazy {
     importOnce(Modules.coreAdb())
 
-    bindProvider { MainScreenViewModel(i(), i()) }
+    bindProvider { MainScreenViewModel(i()) }
+    bindProvider { TopBarScreenViewModel(i(), i(), i()) }
 }
