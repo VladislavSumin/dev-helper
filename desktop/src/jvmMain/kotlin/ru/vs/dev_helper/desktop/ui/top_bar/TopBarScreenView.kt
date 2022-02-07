@@ -43,13 +43,7 @@ private fun TopBar(
                 elevation = 0.dp,
                 modifier = Modifier.clickable { isDropDownMenuExpanded = true }
             ) {
-                val text = when {
-                    //TODO перенести эту логику на уровень view model
-                    viewState.selectedDevice?.model != null -> viewState.selectedDevice.model
-                    viewState.adbDevices.isEmpty() -> "No Devices"
-                    else -> "Device not selected"
-                }
-                Text(text, Modifier.padding(8.dp, 4.dp))
+                Text(viewState.selectedDevice?.model ?: "No Devices", Modifier.padding(8.dp, 4.dp))
             }
 
             SelectAdbDeviceDropdownMenu(

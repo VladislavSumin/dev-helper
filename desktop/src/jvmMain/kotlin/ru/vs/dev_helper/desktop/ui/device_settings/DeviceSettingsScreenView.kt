@@ -25,7 +25,7 @@ fun DeviceSettingsScreenView() {
                 Column {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Text("Show view bounds")
-                        Checkbox(state.isShowViewBounds, {})
+                        Checkbox(state.isShowViewBounds, { viewModel.onSetIsShowViewBounds(it) })
                     }
                 }
             }

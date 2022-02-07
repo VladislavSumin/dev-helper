@@ -19,6 +19,7 @@ class MainScreenViewModel(
         devicesInteractor.observeDevices(),
         lastSelectedAdbDeviceSerial
     ) { devices, serial ->
+        if (serial == null && devices.isNotEmpty()) lastSelectedAdbDeviceSerial.emit(devices.first().serial)
         devices.find { it.serial == serial }
     }
         .distinctUntilChanged()
