@@ -1,7 +1,6 @@
 package ru.vs.dev_helper.desktop.ui.top_bar
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -20,7 +19,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.unit.dp
 import ru.vs.core.decompose.view_model.decomposeViewModel
@@ -45,17 +43,20 @@ private fun TopBar(
                 elevation = 0.dp,
                 modifier = Modifier.clickable { isDropDownMenuExpanded = true }
             ) {
-                Text(
-                    viewState.selectedDevice?.model ?: "<not selected>", Modifier.padding(8.dp, 4.dp),
-                    style = MaterialTheme.typography.body2
-                )
+                val text = when {
+                    //TODO перенести эту логику на уровень view model
+                    viewState.selectedDevice?.model != null -> viewState.selectedDevice.model
+                    viewState.adbDevices.isEmpty() -> "No Devices"
+                    else -> "Device not selected"
+                }
+                Text(text, Modifier.padding(8.dp, 4.dp))
             }
 
             SelectAdbDeviceDropdownMenu(
                 isDropDownMenuExpanded,
                 { isDropDownMenuExpanded = false },
                 viewState.adbDevices,
-                onClickSelectItem
+                { onClickSelectItem(it); isDropDownMenuExpanded = false }
             )
         }
     }
@@ -73,7 +74,7 @@ private fun SelectAdbDeviceDropdownMenu(
             DropdownMenuItem({}, enabled = false) { Text("No Devices") }
         } else {
             devices.forEach { adbDevice ->
-                DropdownMenuItem({ onClickSelectItem(adbDevice) }, modifier = Modifier.border(1.dp, Color.Cyan)) {
+                DropdownMenuItem({ onClickSelectItem(adbDevice) }) {
                     Text(text = adbDevice.model)
                 }
             }
