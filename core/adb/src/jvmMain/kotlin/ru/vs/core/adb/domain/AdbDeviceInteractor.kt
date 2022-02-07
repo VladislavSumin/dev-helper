@@ -15,6 +15,6 @@ internal class AdbDeviceInteractorImpl(
     private val applicationScope: CoroutineScope
 ) : AdbDeviceInteractor {
     override suspend fun getDeviceModel(device: AdbDevice): String {
-        return adb.execute(GetSinglePropRequest("ro.product.model"), serial = device.serial)
+        return adb.execute(GetSinglePropRequest("ro.product.model"), serial = device.serial).trim()
     }
 }
