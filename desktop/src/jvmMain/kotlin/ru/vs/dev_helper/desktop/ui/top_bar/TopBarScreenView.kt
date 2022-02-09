@@ -2,6 +2,7 @@ package ru.vs.dev_helper.desktop.ui.top_bar
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -10,6 +11,7 @@ import androidx.compose.material.ContentAlpha
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -22,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.unit.dp
 import ru.vs.core.decompose.view_model.decomposeViewModel
+import ru.vs.dev_helper.desktop.ui.view.DHButton
 
 @Composable
 fun TopBarScreenView() {
@@ -38,12 +41,10 @@ private fun TopBar(
     Surface(Modifier.fillMaxWidth()) {
         Row(Modifier.padding(32.dp, 4.dp)) {
             var isDropDownMenuExpanded by remember { mutableStateOf(false) }
-            Card(
-                border = BorderStroke(1.dp, SolidColor(MaterialTheme.colors.onSurface.copy(ContentAlpha.disabled))),
-                elevation = 0.dp,
-                modifier = Modifier.clickable { isDropDownMenuExpanded = true }
+            DHButton(
+                onClick = { isDropDownMenuExpanded = true }
             ) {
-                Text(viewState.selectedDevice?.model ?: "No Devices", Modifier.padding(8.dp, 4.dp))
+                Text(viewState.selectedDevice?.model ?: "No Devices")
             }
 
             SelectAdbDeviceDropdownMenu(
