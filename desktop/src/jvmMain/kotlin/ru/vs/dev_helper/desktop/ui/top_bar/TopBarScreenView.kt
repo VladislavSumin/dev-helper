@@ -25,6 +25,7 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.unit.dp
 import ru.vs.core.decompose.view_model.decomposeViewModel
 import ru.vs.dev_helper.desktop.ui.view.DHButton
+import ru.vs.dev_helper.desktop.ui.view.DHButtonDropDown
 
 @Composable
 fun TopBarScreenView() {
@@ -41,7 +42,7 @@ private fun TopBar(
     Surface(Modifier.fillMaxWidth()) {
         Row(Modifier.padding(32.dp, 4.dp)) {
             var isDropDownMenuExpanded by remember { mutableStateOf(false) }
-            DHButton(
+            DHButtonDropDown(
                 onClick = { isDropDownMenuExpanded = true }
             ) {
                 Text(viewState.selectedDevice?.model ?: "No Devices")
