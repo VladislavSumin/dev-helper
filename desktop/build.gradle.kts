@@ -1,5 +1,6 @@
 plugins {
     id("ru.vs.convention.multiplatform.jvm")
+    id("ru.vs.convention.multiplatform.resources")
     id("org.jetbrains.compose")
 }
 
@@ -18,4 +19,8 @@ kotlin {
             }
         }
     }
+}
+
+multiplatformResources {
+    multiplatformResourcesPackage = "ru.vs.dev_helper"
 }
